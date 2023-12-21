@@ -1,0 +1,122 @@
+unit unitPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.StdCtrls, Vcl.ExtCtrls;
+
+type
+  TForm1 = class(TForm)
+    Panel1: TPanel;
+    Label1: TLabel;
+    Panel2: TPanel;
+    SpeedButton1: TSpeedButton;
+    SpeedButton2: TSpeedButton;
+    SpeedButton3: TSpeedButton;
+    SpeedButton4: TSpeedButton;
+    Panel3: TPanel;
+    Label2: TLabel;
+    edtCodigo: TEdit;
+    Label3: TLabel;
+    edtNome: TEdit;
+    edtEndereco: TEdit;
+    Label4: TLabel;
+    Label5: TLabel;
+    edtBairro: TEdit;
+    Label6: TLabel;
+    edtCidade: TEdit;
+    Label7: TLabel;
+    edtUf: TEdit;
+    Label8: TLabel;
+    edtTelefone: TEdit;
+    SpeedButton5: TSpeedButton;
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure SpeedButton5Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    procedure HabilitarEdits;
+    procedure DesabilitarEdits;
+    procedure InserirDadados;
+    procedure LimparCampos;
+
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+uses unitDM;
+{ TForm1 }
+
+procedure TForm1.DesabilitarEdits;
+begin
+  edtCodigo.Enabled := false;
+  edtNome.Enabled := false;
+  edtEndereco.Enabled := false;
+  edtBairro.Enabled :=false;
+  edtCidade.Enabled := false;
+  edtUf.Enabled := false;
+  edtTelefone.Enabled := false;
+end;
+
+procedure TForm1.HabilitarEdits;
+begin
+  edtCodigo.Enabled := false;
+  edtNome.Enabled := true;
+  edtEndereco.Enabled := true;
+  edtBairro.Enabled :=true;
+  edtCidade.Enabled := true;
+  edtUf.Enabled := true;
+  edtTelefone.Enabled := true;
+end;
+
+procedure TForm1.InserirDadados;
+begin
+  with DM.QryClientes do
+    begin
+      close;
+      SQL.Clear;
+      SQL.Add('insert into clientes (nome, endereco, bairro, cidade, uf, telefone values ');
+      SQL.Add('(:pnome, :pendereco, :pbairro, :pcidade, :puf, :ptelefone)');
+      ParamByName('pnome').AsString := edtCodigo.Text;
+      ParamByName('pendereco').AsString := edtEndereco.Text;
+      ParamByName('pbairro').AsString := edtBairro.Text;
+      ParamByName('pcidade').AsString := edtCidade.Text ;
+      ParamByName('puf').AsString := edtUf.Text;
+      ParamByName('ptelefone').AsString := edtTelefone.Text;
+      ExecSQL;
+    end;
+end;
+
+procedure TForm1.LimparCampos;
+begin
+  edtCodigo.Text := '';
+  edtNome.Text := '';
+  edtEndereco.Text := '';
+  edtBairro.Text := '';
+  edtCidade.Text := '';
+  edtUf.Text := '';
+  edtTelefone.Text := '';
+end;
+
+procedure TForm1.SpeedButton1Click(Sender: TObject);
+begin
+  if MessageDlg('Deseja criar um novo registro?,' ,mtConfirmation, [mbYes, mbNo], 0) = mrYes then;
+  HabilitarEdits;
+end;
+
+procedure TForm1.SpeedButton5Click(Sender: TObject);
+begin
+  if MessageDlg('Deseja gravar o registro:?', mtConfirmation, [mbYes, mbNo],0) = mrYes then;
+    InserirDadados;
+    LimparCampos;
+    DesabilitarEdits;
+end;
+
+end.
