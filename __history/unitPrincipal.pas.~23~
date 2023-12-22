@@ -204,14 +204,14 @@ begin
     begin
       close;
       SQL.Clear;
-      SQL.Add('update clientes          '+
-               '  set nome = :pnome,    '+
-               '  endereco = :pendereco,'+
-               '  bairro = :pbairro,    '+
-               '  cidade = :pcidade,    '+
-               '  uf = :puf,            '+
-               '  telefone = :ptelefone '+
-               '  where codigo  = :pcodigo');
+      SQL.Add('update from clientes, '+
+               'set nome = :pnome,'+
+               'endereco = :pendereco,'+
+               'bairro = :pbairro, '+
+               'cidade = :pcidade, '+
+               'uf = :puf, '+
+               'telefone = :ptelefone, '+
+                'where codigo  = :pcodigo');
       ParamByName('pcodigo').AsInteger := StrToInt(edtCodigo.Text);
       ParamByName('pnome').AsString := edtNome.Text;
       ParamByName('pendereco').AsString := edtEndereco.Text;

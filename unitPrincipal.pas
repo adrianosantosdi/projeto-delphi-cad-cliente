@@ -122,6 +122,7 @@ begin
       ParamByName('puf').AsString := edtUf.Text;
       ParamByName('ptelefone').AsString := edtTelefone.Text;
       ExecSQL;
+      LimparCampos;
       Pesquisar;
     end;
 end;
@@ -184,6 +185,7 @@ begin
        if trim(edtCodigo.Text) = '' then
             InserirDadados
        else
+       Update;
       LimparCampos;
       DesabilitarEdits;
       Pesquisar;
@@ -202,21 +204,21 @@ begin
     begin
       close;
       SQL.Clear;
-      SQL.Add('update clientes, '+
-               'set nome = :pnome,'+
-               'endereco = :pendereco,'+
-               'bairro = :pbairro, '+
-               'cidade = :cidade, '+
-               'uf = :uf, '+
-               'telefone = :ptelefone' +
-                'where codigo : = pcodigo');
+      SQL.Add('update clientes        '+
+               '  set nome = :pnome,    '+
+               '  endereco = :pendereco,'+
+               '  bairro = :pbairro,    '+
+               '  cidade = :pcidade,    '+
+               '  uf = :puf,            '+
+               '  telefone = :ptelefone,'+
+               '  where codigo  = :pcodigo');
       ParamByName('pcodigo').AsInteger := StrToInt(edtCodigo.Text);
       ParamByName('pnome').AsString := edtNome.Text;
       ParamByName('pendereco').AsString := edtEndereco.Text;
       ParamByName('pbairro').AsString := edtBairro.Text;
-      ParamByName('cidade').AsString := edtCidade.Text;
-      ParamByName('uf').AsString := edtUf.Text;
-      ParamByName('telefone').AsString := edtTelefone.Text;
+      ParamByName('pcidade').AsString := edtCidade.Text;
+      ParamByName('puf').AsString := edtUf.Text;
+      ParamByName('ptelefone').AsString := edtTelefone.Text;
       ExecSQL;
 
     end;

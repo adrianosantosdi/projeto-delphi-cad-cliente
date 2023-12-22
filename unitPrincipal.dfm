@@ -48,7 +48,6 @@ object Form1: TForm1
     Color = clBlue
     ParentBackground = False
     TabOrder = 1
-    ExplicitHeight = 432
     object btnNovo: TSpeedButton
       Left = 32
       Top = 6
@@ -1417,9 +1416,6 @@ object Form1: TForm1
     Height = 659
     Align = alClient
     TabOrder = 2
-    ExplicitLeft = -6
-    ExplicitTop = 89
-    ExplicitHeight = 432
     object Label2: TLabel
       Left = 32
       Top = 26
